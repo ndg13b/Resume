@@ -1,0 +1,187 @@
+{
+  "_comment": "Single source of truth for the resume. Edit here, then run `python3 tools/build_resume.py` to regenerate resume.html and the downloadable .docx / .pdf.",
+
+  "name": "Nicholas D. Gray, Ph.D.",
+  "short_name": "Nick Gray",
+  "initials": "NG",
+  "title": "Data Scientist",
+  "tagline": "Insurance analytics, predictive modeling, and a decade of quantitative research.",
+
+  "contact": {
+    "email": "ndgray00@gmail.com",
+    "phone": "513-504-0179",
+    "location": "Maryland Heights, MO",
+    "location_long": "Maryland Heights, MO (St. Louis area)",
+    "github": "https://github.com/ndg13b",
+    "github_label": "github.com/ndg13b"
+  },
+
+  "web_contact": ["email", "location", "github"],
+
+  "summary": "Data scientist with nearly four years of industry experience in insurance analytics, built on a decade of quantitative research training. Combines a Ph.D. in Cognitive Psychology with hands-on expertise in SQL, Python, and machine learning to turn large, messy data sources into models, reports, and recommendations that stakeholders act on.",
+
+  "summary_web": "I turn large, messy data into models and reports that people actually make decisions with. Nearly four years of that has been in insurance analytics at Safety National; the decade before it was quantitative research, a Ph.D. in Cognitive Psychology, and a lot of time spent explaining statistics to people who did not come for the statistics.",
+
+  "stats": [
+    { "value": "~4 yrs", "label": "industry data science" },
+    { "value": "9 yrs", "label": "quantitative research" },
+    { "value": "4", "label": "selected publications" },
+    { "value": "3", "label": "public code projects" }
+  ],
+
+  "skills": [
+    {
+      "group": "Languages & Tools",
+      "items": [
+        { "name": "Python", "level": "advanced" },
+        { "name": "SQL / Microsoft SQL Server" },
+        { "name": "R" },
+        { "name": "MATLAB" },
+        { "name": "Microsoft Excel", "level": "advanced" }
+      ]
+    },
+    {
+      "group": "Machine Learning",
+      "items": [
+        { "name": "XGBoost & gradient boosting" },
+        { "name": "Regression (linear & logistic)" },
+        { "name": "Predictive modeling" },
+        { "name": "Model evaluation" }
+      ]
+    },
+    {
+      "group": "Data & Analysis",
+      "items": [
+        { "name": "ETL & data cleaning" },
+        { "name": "Exploratory data analysis" },
+        { "name": "Statistical inference" },
+        { "name": "Experimental design" },
+        { "name": "Survey & qualitative analysis" }
+      ]
+    },
+    {
+      "group": "Communication",
+      "items": [
+        { "name": "Stakeholder reporting" },
+        { "name": "Data visualization" },
+        { "name": "Technical writing" },
+        { "name": "Teaching & presentation" }
+      ]
+    }
+  ],
+
+  "experience": [
+    {
+      "role": "Data Science Associate",
+      "org": "Safety National Casualty Corporation",
+      "place": "St. Louis, MO",
+      "start": "Oct 2022",
+      "end": "Present",
+      "year_label": "2022",
+      "current": true,
+      "bullets": [
+        "Build analytics reports and dashboards used by internal teams and external stakeholders across the business.",
+        "Extract and join data from large, complex sources in Microsoft SQL Server, then transform and clean it in Python for analysis.",
+        "Develop machine-learning models — including XGBoost — that produce business-relevant predictions for underwriting and claims questions.",
+        "Design custom analyses out of exploratory investigation, tailoring method and reporting to the decision each stakeholder actually faces."
+      ]
+    },
+    {
+      "role": "Postdoctoral Researcher — Quantitative Analysis",
+      "org": "Institute for Successful Longevity, Florida State University",
+      "place": "Tallahassee, FL",
+      "start": "Aug 2019",
+      "end": "Oct 2022",
+      "year_label": "2019",
+      "bullets": [
+        "Led statistical analysis for large-scale behavioral clinical trials on healthy cognitive aging, working across longitudinal datasets and multiple analysis platforms.",
+        "Established statistical performance norms and built regression models identifying the variables that drive cognitive outcomes.",
+        "Integrated qualitative streams — surveys and interviews — with quantitative measures to produce findings neither would support alone.",
+        "Designed and programmed novel studies end to end and published the results in peer-reviewed journals."
+      ]
+    },
+    {
+      "role": "Graduate Researcher",
+      "org": "Department of Psychology, Florida State University",
+      "place": "Tallahassee, FL",
+      "start": "Aug 2013",
+      "end": "May 2019",
+      "year_label": "2013",
+      "bullets": [
+        "Modeled experimental data with logistic regression and related statistical methods across several software platforms.",
+        "Designed, programmed, and ran grant-funded experimental research; managed the lab, recruiting and supervising undergraduate researchers.",
+        "Taught laboratory sections of Cognitive Psychology and co-instructed Careers in Psychology (2014–2019), translating complex statistical concepts for non-expert audiences."
+      ]
+    }
+  ],
+
+  "education": [
+    {
+      "degree": "Ph.D., Cognitive Psychology",
+      "school": "Florida State University",
+      "year": "2019",
+      "note": "Thesis: The causes of and influences on being reminded"
+    },
+    {
+      "degree": "M.S., Cognitive Psychology",
+      "school": "Florida State University",
+      "year": "2016",
+      "note": "Thesis: Avoiding interference: Differentiation and reminding"
+    },
+    {
+      "degree": "B.S., Psychology, cum laude",
+      "school": "Ohio State University",
+      "year": "2012",
+      "note": ""
+    }
+  ],
+
+  "coursework": "Machine Learning with Python; Microsoft SQL Server (independently completed)",
+
+  "projects": [
+    {
+      "name": "adherence",
+      "language": "Python",
+      "repo": "https://github.com/ndg13b/adherence",
+      "demo": "",
+      "demo_label": "",
+      "blurb": "A statistics package that scores how <em>regular</em> someone's engagement is — not just how much of it there is — and turns that into a forecast of when they will next show up. Separates timing consistency, anchor precision, and weekday regularity so the one you care about is not averaged away.",
+      "blurb_plain": "A statistics package that scores how regular someone's engagement is — not just how much of it there is — and turns that into a forecast of when they will next show up.",
+      "tags": ["numpy", "scipy", "time-series", "forecasting", "144 tests"]
+    },
+    {
+      "name": "CivicGateway",
+      "language": "JavaScript",
+      "repo": "https://github.com/ndg13b/CivicGateway",
+      "demo": "https://civicgateway.org/",
+      "demo_label": "civicgateway.org",
+      "blurb": "A nonpartisan site that shows people their upcoming elections and current elected officials by city. Static front end reading a Supabase / PostgreSQL back end, with a designed schema, row-level security, and an offline snapshot so it degrades to stale data instead of an error.",
+      "blurb_plain": "A nonpartisan site showing upcoming elections and elected officials by city; static front end over a Supabase/PostgreSQL schema with row-level security and an offline fallback.",
+      "tags": ["PostgreSQL", "Supabase", "schema design", "GitHub Pages"]
+    },
+    {
+      "name": "tuned-in",
+      "language": "JavaScript",
+      "repo": "https://github.com/ndg13b/tuned-in",
+      "demo": "https://ndg13b.github.io/tuned-in/",
+      "demo_label": "ndg13b.github.io/tuned-in",
+      "blurb": "A teaching collection pairing pop-culture clips with the cognitive psychology they demonstrate — and, just as often, get wrong. Every concept carries one of three verdicts, because collapsing them into right and wrong would make the site less accurate than the shows it corrects.",
+      "blurb_plain": "A teaching collection pairing pop-culture clips with the cognitive psychology they demonstrate — and, just as often, get wrong.",
+      "tags": ["teaching", "search & filtering", "GitHub Pages"]
+    }
+  ],
+
+  "publications": [
+    "Gray, N., & Charness, N. (2022). Technology obsolescence across the adult lifespan in a USA internet sample. <em>Frontiers in Public Health, 10</em>, 1005822.",
+    "Gray, N., Yoon, J.-S., Charness, N., Boot, W. R., et al. (2021). Relative effectiveness of general versus specific cognitive training for aging adults. <em>Psychology and Aging, 37</em>(2), 210–221.",
+    "Carr, D. C., Tian, S., He, Z., et al., incl. Gray, N. (2022). Motivation to engage in aging research: Are there typologies and predictors? <em>The Gerontologist</em>, gnac035.",
+    "Charness, N., Boot, W. R., & Gray, N. (2020). Mobile monitoring and intervention technology (MMI) for adaptive aging. In <em>Mobile Technology for Adaptive Aging: Proceedings of a Workshop</em> (pp. 21–40). National Academies Press."
+  ],
+
+  "publications_note": "Conference presentations at the Psychonomic Society (2018) and the Cognitive Aging Conference (2022).",
+
+  "downloads": {
+    "pdf": "assets/Nicholas_Gray_Resume.pdf",
+    "docx": "assets/Nicholas_Gray_Resume.docx"
+  }
+}
