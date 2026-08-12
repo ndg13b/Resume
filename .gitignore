@@ -1,0 +1,5 @@
+# Generated intermediate for the PDF build — regenerate with tools/build_resume.py
+build/
+
+# OS noise
+.DS_Store
