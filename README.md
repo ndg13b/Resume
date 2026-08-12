@@ -43,12 +43,16 @@ their own copy of the masthead and footer; if you change the navigation, change
 it in all four places — the build script's copy lives in the `masthead()` and
 `footer()` functions.
 
-### The web page and the downloads differ in two deliberate ways
+### One deliberate difference between the page and the downloads
 
-- The phone number appears only in the `.pdf` and `.docx`, never on the web
-  page, so it does not get scraped. `web_contact` in the JSON controls this.
-- The web page uses `summary_web` (first person, conversational); the documents
-  use `summary` (third person, conventional resume voice).
+The phone number appears only in the `.pdf` and `.docx`, never on the web page,
+so it does not get scraped. `web_contact` in the JSON controls which contact
+details reach the page; the documents always carry the full set.
+
+The `summary` field is written in the conventional third-person resume voice and
+is used verbatim on `resume.html` and in both documents. The first-person intro
+on the landing page is separate prose that lives in `index.html`, alongside the
+rest of that page's hand-written copy.
 
 ## Design
 

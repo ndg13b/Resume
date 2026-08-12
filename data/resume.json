@@ -20,8 +20,6 @@
 
   "summary": "Data scientist with nearly four years of industry experience in insurance analytics, built on a decade of quantitative research training. Combines a Ph.D. in Cognitive Psychology with hands-on expertise in SQL, Python, and machine learning to turn large, messy data sources into models, reports, and recommendations that stakeholders act on.",
 
-  "summary_web": "I turn large, messy data into models and reports that people actually make decisions with. Nearly four years of that has been in insurance analytics at Safety National; the decade before it was quantitative research, a Ph.D. in Cognitive Psychology, and a lot of time spent explaining statistics to people who did not come for the statistics.",
-
   "stats": [
     { "value": "~4 yrs", "label": "industry data science" },
     { "value": "9 yrs", "label": "quantitative research" },
