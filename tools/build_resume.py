@@ -358,6 +358,10 @@ def build_site_html(d: dict) -> str:
 {edu}
       </ul>
       <div class="coursework">
+        <strong>Graduate methods training</strong>
+        {e(d["methods_training"])}
+      </div>
+      <div class="coursework">
         <strong>Additional coursework</strong>
         {e(d["coursework"])}
       </div>
@@ -566,7 +570,8 @@ def build_print_html(d: dict) -> str:
 
   <section>
     <h2 class="sec">Education</h2>
-{edu}    <div class="coursework"><b>Additional coursework:</b> {e(d["coursework"])}</div>
+{edu}    <div class="coursework"><b>Graduate methods training:</b> {e(d["methods_training"])}</div>
+    <div class="coursework"><b>Additional coursework:</b> {e(d["coursework"])}</div>
   </section>
 
   <section>
@@ -748,10 +753,19 @@ def build_docx_document(d: dict) -> str:
     body.append(
         para(
             [
+                r("Graduate methods training:  ", b=True, color=TEAL, sz=18),
+                r(d["methods_training"], color=SOFT, sz=19),
+            ],
+            before=90, after=30,
+        )
+    )
+    body.append(
+        para(
+            [
                 r("Additional coursework:  ", b=True, color=TEAL, sz=18),
                 r(d["coursework"], color=SOFT, sz=19),
             ],
-            before=90, after=40,
+            after=40,
         )
     )
 
