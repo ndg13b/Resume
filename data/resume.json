@@ -5,7 +5,7 @@
   "short_name": "Nick Gray",
   "initials": "NG",
   "title": "Data Scientist",
-  "tagline": "Insurance analytics, predictive modeling, and a decade of quantitative research.",
+  "tagline": "Insurance analytics, applied statistics, and a decade of quantitative research.",
 
   "contact": {
     "email": "ndgray00@gmail.com",
@@ -18,7 +18,7 @@
 
   "web_contact": ["email", "location", "github"],
 
-  "summary": "Data scientist with nearly four years of industry experience in insurance analytics, built on a decade of quantitative research training. Combines a Ph.D. in Cognitive Psychology with hands-on expertise in SQL, Python, and machine learning to turn large, messy data sources into models, reports, and recommendations that stakeholders act on.",
+  "summary": "Data scientist with nearly four years of industry experience in insurance analytics, built on a decade of quantitative research training. Combines a Ph.D. in Cognitive Psychology with hands-on expertise in SQL, Python, and applied statistics to turn large, messy data sources into analyses, reports, and recommendations that stakeholders act on.",
 
   "stats": [
     { "value": "~4 yrs", "label": "industry data science" },
@@ -39,11 +39,12 @@
       ]
     },
     {
-      "group": "Machine Learning",
+      "group": "Modeling & Statistics",
       "items": [
-        { "name": "XGBoost & gradient boosting" },
         { "name": "Regression (linear & logistic)" },
-        { "name": "Predictive modeling" },
+        { "name": "XGBoost & gradient boosting (applied)" },
+        { "name": "Statistical inference" },
+        { "name": "Experimental design" },
         { "name": "Model evaluation" }
       ]
     },
@@ -52,8 +53,6 @@
       "items": [
         { "name": "ETL & data cleaning" },
         { "name": "Exploratory data analysis" },
-        { "name": "Statistical inference" },
-        { "name": "Experimental design" },
         { "name": "Survey & qualitative analysis" }
       ]
     },
@@ -80,7 +79,7 @@
       "bullets": [
         "Build analytics reports and dashboards used by internal teams and external stakeholders across the business.",
         "Extract and join data from large, complex sources in Microsoft SQL Server, then transform and clean it in Python for analysis.",
-        "Develop machine-learning models — including XGBoost — that produce business-relevant predictions for underwriting and claims questions.",
+        "Run and adjust established XGBoost models, validating output and interpreting predictions for underwriting and claims questions.",
         "Design custom analyses out of exploratory investigation, tailoring method and reporting to the decision each stakeholder actually faces."
       ]
     },
@@ -134,6 +133,7 @@
     }
   ],
 
+  "methods_training": "ANOVA, regression, meta-analysis, structural equation modeling",
   "coursework": "Machine Learning with Python; Microsoft SQL Server (independently completed)",
 
   "projects": [

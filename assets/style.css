@@ -777,6 +777,8 @@ main { padding-bottom: 5rem; }
   margin-top: 0.15rem;
 }
 
+.coursework + .coursework { margin-top: 0.45rem; }
+
 .coursework {
   margin-top: 1.1rem;
   padding: 0.8rem 1rem;
