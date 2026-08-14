@@ -79,7 +79,7 @@
       "bullets": [
         "Build analytics reports and dashboards used by internal teams and external stakeholders across the business.",
         "Extract and join data from large, complex sources in Microsoft SQL Server, then transform and clean it in Python for analysis.",
-        "Run and adjust established XGBoost models, validating output and interpreting predictions for underwriting and claims questions.",
+        "Run and adjust established machine-learning models (XGBoost), validating output and interpreting predictions for underwriting and claims questions.",
         "Design custom analyses out of exploratory investigation, tailoring method and reporting to the decision each stakeholder actually faces."
       ]
     },
