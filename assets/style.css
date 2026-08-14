@@ -635,7 +635,8 @@ main { padding-bottom: 5rem; }
 }
 .chip:hover { border-color: var(--accent-line); color: var(--text); }
 
-.chip--advanced {
+/* Any chip carrying a stated level, whatever the level says. */
+.chip--leveled {
   border-color: var(--accent-line);
   background: var(--accent-wash);
   color: var(--text);

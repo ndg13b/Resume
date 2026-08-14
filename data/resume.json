@@ -18,7 +18,7 @@
 
   "web_contact": ["email", "location", "github"],
 
-  "summary": "Data scientist with nearly four years of industry experience in insurance analytics, built on a decade of quantitative research training. Combines a Ph.D. in Cognitive Psychology with hands-on expertise in SQL, Python, and applied statistics to turn large, messy data sources into analyses, reports, and recommendations that stakeholders act on.",
+  "summary": "Data scientist with nearly four years of industry experience in insurance analytics, built on a decade of quantitative research training. Combines a Ph.D. in Cognitive Psychology with day-to-day SQL, Python, and applied statistics to turn large, messy data sources into analyses, reports, and recommendations that stakeholders act on.",
 
   "stats": [
     { "value": "~4 yrs", "label": "industry data science" },
@@ -31,11 +31,11 @@
     {
       "group": "Languages & Tools",
       "items": [
-        { "name": "Python", "level": "advanced" },
+        { "name": "Python", "level": "proficient" },
         { "name": "SQL / Microsoft SQL Server" },
         { "name": "R" },
         { "name": "MATLAB" },
-        { "name": "Microsoft Excel", "level": "advanced" }
+        { "name": "Microsoft Excel", "level": "proficient" }
       ]
     },
     {
@@ -59,7 +59,7 @@
     {
       "group": "Communication",
       "items": [
-        { "name": "Stakeholder reporting" },
+        { "name": "Stakeholder reporting & dashboards" },
         { "name": "Data visualization" },
         { "name": "Technical writing" },
         { "name": "Teaching & presentation" }
@@ -79,7 +79,7 @@
       "bullets": [
         "Build analytics reports and dashboards used by internal teams and external stakeholders across the business.",
         "Extract and join data from large, complex sources in Microsoft SQL Server, then transform and clean it in Python for analysis.",
-        "Run and adjust established XGBoost models, validating output and interpreting predictions for underwriting and claims questions.",
+        "Run and adjust established machine-learning models (XGBoost), validating output and interpreting predictions for underwriting and claims questions.",
         "Design custom analyses out of exploratory investigation, tailoring method and reporting to the decision each stakeholder actually faces."
       ]
     },
@@ -143,9 +143,9 @@
       "repo": "https://github.com/ndg13b/adherence",
       "demo": "",
       "demo_label": "",
-      "blurb": "A statistics package that scores how <em>regular</em> someone's engagement is — not just how much of it there is — and turns that into a forecast of when they will next show up. Separates timing consistency, anchor precision, and weekday regularity so the one you care about is not averaged away.",
-      "blurb_plain": "A statistics package that scores how regular someone's engagement is — not just how much of it there is — and turns that into a forecast of when they will next show up.",
-      "tags": ["numpy", "scipy", "time-series", "forecasting", "144 tests"]
+      "blurb": "Scores how <em>regular</em> a behavior is — not just how often it happens — from nothing but a list of timestamps, then forecasts when the next session will land. Because it only ever sees timestamps, the same model applies to medication timing, exercise, physiotherapy, or a training program.",
+      "blurb_plain": "Scores how regular a behavior is — not just how often it happens — from nothing but a list of timestamps, then forecasts when the next session will land. The same model applies to medication timing, exercise, physiotherapy, or a training program.",
+      "tags": ["numpy", "scipy", "time-series", "forecasting", "169 tests"]
     },
     {
       "name": "CivicGateway",
@@ -153,8 +153,8 @@
       "repo": "https://github.com/ndg13b/CivicGateway",
       "demo": "https://civicgateway.org/",
       "demo_label": "civicgateway.org",
-      "blurb": "A nonpartisan site that shows people their upcoming elections and current elected officials by city. Static front end reading a Supabase / PostgreSQL back end, with a designed schema, row-level security, and an offline snapshot so it degrades to stale data instead of an error.",
-      "blurb_plain": "A nonpartisan site showing upcoming elections and elected officials by city; static front end over a Supabase/PostgreSQL schema with row-level security and an offline fallback.",
+      "blurb": "A nonpartisan site showing upcoming elections and current elected officials by city. Static front end over a Supabase / PostgreSQL back end, with a schema designed from scratch, row-level security, and an offline snapshot so the site degrades to stale data instead of an error.",
+      "blurb_plain": "A nonpartisan site showing upcoming elections and elected officials by city; static front end over a Supabase/PostgreSQL back end with a schema designed from scratch, row-level security, and an offline fallback.",
       "tags": ["PostgreSQL", "Supabase", "schema design", "GitHub Pages"]
     },
     {
@@ -163,8 +163,8 @@
       "repo": "https://github.com/ndg13b/tuned-in",
       "demo": "https://ndg13b.github.io/tuned-in/",
       "demo_label": "ndg13b.github.io/tuned-in",
-      "blurb": "A teaching collection pairing pop-culture clips with the cognitive psychology they demonstrate — and, just as often, get wrong. Every concept carries one of three verdicts, because collapsing them into right and wrong would make the site less accurate than the shows it corrects.",
-      "blurb_plain": "A teaching collection pairing pop-culture clips with the cognitive psychology they demonstrate — and, just as often, get wrong.",
+      "blurb": "A teaching collection pairing pop-culture clips with the cognitive psychology they demonstrate — and, just as often, get wrong. Each concept is labeled accurate, overstated, or myth, with search and filtering by topic and course unit.",
+      "blurb_plain": "A teaching collection pairing pop-culture clips with the cognitive psychology they demonstrate — and, just as often, get wrong. Each concept is labeled accurate, overstated, or myth.",
       "tags": ["teaching", "search & filtering", "GitHub Pages"]
     }
   ],
