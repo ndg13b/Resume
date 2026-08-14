@@ -278,7 +278,7 @@ def build_site_html(d: dict) -> str:
 
     pubs = "".join(f"\n        <li>{p}</li>" for p in d["publications"])
 
-    return f"""{head(f"Resume — {d['short_name']}", f"{d['title']} in {c['location']}. {strip_tags(d['tagline'])}")}
+    return f"""{head(f"{d['name']} — Resume", f"{d['title']} in {c['location']}. {strip_tags(d['tagline'])}")}
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
