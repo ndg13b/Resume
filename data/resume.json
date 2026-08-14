@@ -31,11 +31,11 @@
     {
       "group": "Languages & Tools",
       "items": [
-        { "name": "Python", "level": "advanced" },
+        { "name": "Python", "level": "proficient" },
         { "name": "SQL / Microsoft SQL Server" },
         { "name": "R" },
         { "name": "MATLAB" },
-        { "name": "Microsoft Excel", "level": "advanced" }
+        { "name": "Microsoft Excel", "level": "proficient" }
       ]
     },
     {

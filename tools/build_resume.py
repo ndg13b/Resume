@@ -254,7 +254,7 @@ def build_site_html(d: dict) -> str:
         for item in g["items"]:
             if item.get("level"):
                 chips.append(
-                    f'<li class="chip chip--advanced">{e(item["name"])}'
+                    f'<li class="chip chip--leveled">{e(item["name"])}'
                     f'<span class="chip__level">{e(item["level"])}</span></li>'
                 )
             else:
