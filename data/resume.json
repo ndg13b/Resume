@@ -13,7 +13,9 @@
     "location": "Maryland Heights, MO",
     "location_long": "Maryland Heights, MO (St. Louis area)",
     "github": "https://github.com/ndg13b",
-    "github_label": "github.com/ndg13b"
+    "github_label": "github.com/ndg13b",
+    "site": "https://ndg13b.github.io/Resume/",
+    "site_label": "ndg13b.github.io/Resume"
   },
 
   "web_contact": ["email", "location", "github"],
