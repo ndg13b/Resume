@@ -410,17 +410,24 @@ PRINT_CSS = """
   h1.name {
     font-size: 21pt; letter-spacing: -0.4pt; line-height: 1.05; color: #10201d;
   }
+  /* Letter-spacing above ~0.8pt makes Chrome write the gaps into the PDF text
+     stream, so "TECHNICAL SKILLS" extracts as "T E C H N I C A L  S K I L L S"
+     and resume parsers stop recognising the section headings. 0.6pt keeps the
+     spaced-caps look with room to spare. Re-verify by extracting text if this
+     is ever raised. */
   .role {
-    font-size: 9.6pt; font-weight: 700; letter-spacing: 1.5pt;
+    font-size: 9.6pt; font-weight: 700; letter-spacing: 0.6pt;
     text-transform: uppercase; color: #0d7361; margin-top: 3pt;
   }
-  .contact { font-size: 8.9pt; color: #475653; margin-top: 5pt; }
-  .contact .sep { color: #0d7361; margin: 0 5pt; }
+  /* 8.4pt keeps the five contact items on one line; at 8.9pt the
+     location wraps mid-"Maryland Heights, MO". */
+  .contact { font-size: 8.4pt; color: #475653; margin-top: 5pt; }
+  .contact .sep { color: #0d7361; margin: 0 4pt; }
 
   .summary { font-size: 9.7pt; color: #263533; margin-bottom: 11pt; }
 
   h2.sec {
-    font-size: 8.6pt; letter-spacing: 1.5pt; text-transform: uppercase;
+    font-size: 8.6pt; letter-spacing: 0.6pt; text-transform: uppercase;
     color: #0d7361; border-bottom: 0.75pt solid #cfd8d5;
     padding-bottom: 2.5pt; margin: 0 0 6pt;
     /* never let a section heading be the last thing on a page */
@@ -483,6 +490,7 @@ def build_print_html(d: dict) -> str:
         e(c["email"]),
         e(c["phone"]),
         e(c["location"]),
+        e(c["site_label"]),
         e(c["github_label"]),
     ]
     contact_line = '<span class="sep">|</span>'.join(contact_bits)
@@ -669,7 +677,8 @@ def build_docx_document(d: dict) -> str:
     body.append(
         para([r(d["title"], b=True, color=TEAL, sz=19, caps=True, spacing=30)], after=60)
     )
-    contact = f'{c["email"]}   |   {c["phone"]}   |   {c["location"]}   |   {c["github_label"]}'
+    contact = (f'{c["email"]}  |  {c["phone"]}  |  {c["location"]}'
+               f'  |  {c["site_label"]}  |  {c["github_label"]}')
     body.append(para([r(contact, color=MUTED, sz=17)], after=140, border=True))
 
     # --- summary
