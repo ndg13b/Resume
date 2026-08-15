@@ -926,6 +926,13 @@ main { padding-bottom: 5rem; }
   gap: 1.1rem;
 }
 
+/* With an odd number of items the last one would sit alone in a half-empty
+   row; let it span instead so the block still ends on a full line. */
+.two-col > :last-child:nth-child(odd),
+.skill-grid > .skill-group:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 /* --- hobbies --------------------------------------------------------- */
 
 .hobby-grid {
