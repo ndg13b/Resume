@@ -38,6 +38,37 @@ in a browser and print to PDF by hand.
 about that page comes from `data/resume.json` (content) and
 [`tools/build_resume.py`](tools/build_resume.py) (layout).
 
+### Variants
+
+A variant is a targeted version of the resume for a different kind of role. Each
+one is a file in `data/variants/` holding **only what differs** from the base;
+everything it does not mention — dates, employers, education, publications,
+contact details — comes from `data/resume.json`, so the two can never disagree
+on a fact neither meant to change.
+
+```bash
+python3 tools/build_resume.py --variant research   # one variant
+python3 tools/build_resume.py --all                # base + every variant
+```
+
+A variant may override any top-level field, plus two of its own:
+
+- `section_order` — which sections appear and in what order. The research
+  variant puts publications ahead of projects, which is what that audience
+  reads first.
+- `experience_overrides` — keyed by employer, normally supplying just
+  `bullets`. The same job is described with different emphasis without
+  restating its title or dates. Naming an employer that is not in the base
+  file is an error rather than a silent no-op.
+
+Variants produce `assets/Nicholas_Gray_Resume_<Name>.pdf` and `.docx` only. The
+website always shows the default version — variants exist to be attached to an
+application, not published.
+
+`data/variants/research.json` is the worked example: research-facing skill
+groups, IRB and Qualtrics surfaced in the postdoctoral role, and modeling work
+described in terms of analysis rather than production systems.
+
 The other three pages *are* hand-written, so edit them directly. They each carry
 their own copy of the masthead and footer; if you change the navigation, change
 it in all four places — the build script's copy lives in the `masthead()` and

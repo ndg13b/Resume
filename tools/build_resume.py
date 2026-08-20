@@ -2,13 +2,19 @@
 """
 Build the resume page and its downloadable versions from data/resume.json.
 
-    python3 tools/build_resume.py
+    python3 tools/build_resume.py                    default
+    python3 tools/build_resume.py --variant research one variant
+    python3 tools/build_resume.py --all              default + every variant
 
 Writes:
-    resume.html                          the styled web page
+    resume.html                          the styled web page (default only)
     assets/Nicholas_Gray_Resume.docx     editable Word version (ATS-friendly)
     assets/Nicholas_Gray_Resume.pdf      print version
     build/resume-print.html              intermediate the PDF is rendered from
+
+A variant is a file in data/variants/ holding only what differs from
+data/resume.json; see the README. Its outputs are suffixed with the variant
+name, and it does not regenerate the website page.
 
 Standard library only, except that the PDF step shells out to a headless
 Chrome/Chromium if one can be found, and falls back to LibreOffice converting
@@ -62,9 +68,64 @@ def xe(s: str) -> str:
     )
 
 
-def load() -> dict:
+DEFAULT_SECTION_ORDER = ["skills", "experience", "projects", "education", "publications"]
+
+DEFAULT_SECTION_TITLES = {
+    "skills": "Technical Skills",
+    "experience": "Professional Experience",
+    "projects": "Selected Projects",
+    "education": "Education",
+    "publications": "Selected Publications",
+}
+
+
+def deep_merge(base: dict, over: dict) -> dict:
+    """
+    Overlay `over` onto `base`. Nested dicts merge; everything else replaces,
+    so a variant that supplies "skills" replaces the whole list rather than
+    trying to splice into it.
+
+    `experience_overrides` is handled separately: it is keyed by employer, and
+    only the keys it names (normally "bullets") change on that entry. That way
+    a variant never restates dates, titles or locations, and cannot drift from
+    the base on facts it did not mean to touch.
+    """
+    out = dict(base)
+    for key, value in over.items():
+        if key.startswith("_") or key == "experience_overrides":
+            continue
+        if isinstance(value, dict) and isinstance(out.get(key), dict):
+            out[key] = deep_merge(out[key], value)
+        else:
+            out[key] = value
+
+    overrides = over.get("experience_overrides") or {}
+    if overrides:
+        unknown = set(overrides) - {job["org"] for job in out["experience"]}
+        if unknown:
+            raise SystemExit(
+                "experience_overrides names an employer that is not in "
+                f"data/resume.json: {', '.join(sorted(unknown))}"
+            )
+        out["experience"] = [{**job, **overrides.get(job["org"], {})}
+                             for job in out["experience"]]
+    return out
+
+
+def load(variant: str | None = None) -> dict:
     with DATA.open(encoding="utf-8") as fh:
-        return json.load(fh)
+        d = json.load(fh)
+    if variant:
+        path = ROOT / "data" / "variants" / f"{variant}.json"
+        if not path.exists():
+            raise SystemExit(f"no such variant: data/variants/{variant}.json")
+        with path.open(encoding="utf-8") as fh:
+            d = deep_merge(d, json.load(fh))
+    d.setdefault("section_order", DEFAULT_SECTION_ORDER)
+    titles = dict(DEFAULT_SECTION_TITLES)
+    titles.update(d.get("section_titles") or {})
+    d["section_titles"] = titles
+    return d
 
 
 # ---------------------------------------------------------------------------
@@ -546,6 +607,26 @@ def build_print_html(d: dict) -> str:
 
     pubs = "".join(f'      <div class="pub">{strip_tags(p)}</div>\n' for p in d["publications"])
 
+    blocks = {
+        "skills": f'    <table class="skills-table">\n{skills}    </table>',
+        "experience": jobs.rstrip("\n"),
+        "projects": projects.rstrip("\n"),
+        "education": (
+            f'{edu}    <div class="coursework"><b>Graduate methods training:</b> '
+            f'{e(d["methods_training"])}</div>\n'
+            f'    <div class="coursework"><b>Additional coursework:</b> '
+            f'{e(d["coursework"])}</div>'
+        ),
+        "publications": (
+            f'{pubs}    <div class="pub-note">{e(d["publications_note"])}</div>'
+        ),
+    }
+    sections = "\n".join(
+        f'  <section>\n    <h2 class="sec">{e(d["section_titles"][key])}</h2>\n'
+        f'{blocks[key]}\n  </section>'
+        for key in d["section_order"]
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -562,30 +643,7 @@ def build_print_html(d: dict) -> str:
 
   <div class="summary">{strip_tags(d["summary"])}</div>
 
-  <section>
-    <h2 class="sec">Technical Skills</h2>
-    <table class="skills-table">
-{skills}    </table>
-  </section>
-
-  <section>
-    <h2 class="sec">Professional Experience</h2>
-{jobs}  </section>
-
-  <section>
-    <h2 class="sec">Selected Projects</h2>
-{projects}  </section>
-
-  <section>
-    <h2 class="sec">Education</h2>
-{edu}    <div class="coursework"><b>Graduate methods training:</b> {e(d["methods_training"])}</div>
-    <div class="coursework"><b>Additional coursework:</b> {e(d["coursework"])}</div>
-  </section>
-
-  <section>
-    <h2 class="sec">Selected Publications</h2>
-{pubs}    <div class="pub-note">{e(d["publications_note"])}</div>
-  </section>
+{sections}
 </body>
 </html>
 """
@@ -684,107 +742,128 @@ def build_docx_document(d: dict) -> str:
     # --- summary
     body.append(para([r(strip_tags(d["summary"]), color=BODY, sz=20)], before=100, after=40))
 
-    # --- skills
-    body.append(heading("Technical Skills"))
-    for g in d["skills"]:
-        vals = ", ".join(
-            f'{i["name"]} ({i["level"]})' if i.get("level") else i["name"]
-            for i in g["items"]
-        )
-        body.append(
+    # --- sections, emitted in the order the variant asks for
+    def skills_block():
+        out = []
+        for g in d["skills"]:
+            vals = ", ".join(
+                f'{i["name"]} ({i["level"]})' if i.get("level") else i["name"]
+                for i in g["items"]
+            )
+            out.append(
+                para(
+                    [
+                        r(f'{g["group"]}:  ', b=True, color=TEAL, sz=18),
+                        r(vals, color=BODY, sz=19),
+                    ],
+                    after=40, indent=(1620, 1620),
+                )
+            )
+        return out
+
+    def experience_block():
+        out = []
+        for job in d["experience"]:
+            out.append(
+                para(
+                    [
+                        r(job["role"], b=True, color=INK, sz=21),
+                        tab_run(),
+                        r(f'{job["start"]} \u2013 {job["end"]}', color=MUTED, sz=17),
+                    ],
+                    before=110, after=0, tabs=True, keep_next=True,
+                )
+            )
+            out.append(
+                para(
+                    [r(f'{job["org"]}  \u00b7  {job["place"]}', i=True, color=SOFT, sz=19)],
+                    after=50, keep_next=True,
+                )
+            )
+            for bullet in job["bullets"]:
+                out.append(
+                    para([r(strip_tags(bullet), color=BODY, sz=19)],
+                         after=30, numbered=True)
+                )
+        return out
+
+    def projects_block():
+        out = []
+        for pr in d["projects"]:
+            label = pr["demo_label"] or pr["repo"].replace("https://", "")
+            out.append(
+                para(
+                    [
+                        r(pr["name"], b=True, color=INK, sz=20),
+                        r(f'  \u2014  {pr["language"]}  \u00b7  {label}', color=MUTED, sz=17),
+                    ],
+                    before=90, after=10, keep_next=True,
+                )
+            )
+            out.append(
+                para([r(strip_tags(pr["blurb_plain"]), color=BODY, sz=19)], after=30)
+            )
+        return out
+
+    def education_block():
+        out = []
+        for x in d["education"]:
+            out.append(
+                para(
+                    [
+                        r(x["degree"], b=True, color=INK, sz=20),
+                        tab_run(),
+                        r(x["year"], color=MUTED, sz=17),
+                    ],
+                    before=90, after=0, tabs=True, keep_next=True,
+                )
+            )
+            out.append(para([r(x["school"], color=SOFT, sz=19)],
+                            after=0 if x.get("note") else 30))
+            if x.get("note"):
+                out.append(para([r(x["note"], i=True, color=MUTED, sz=18)], after=30))
+        out.append(
             para(
                 [
-                    r(f'{g["group"]}:  ', b=True, color=TEAL, sz=18),
-                    r(vals, color=BODY, sz=19),
+                    r("Graduate methods training:  ", b=True, color=TEAL, sz=18),
+                    r(d["methods_training"], color=SOFT, sz=19),
                 ],
-                after=40, indent=(1620, 1620),
+                before=90, after=30,
             )
         )
-
-    # --- experience
-    body.append(heading("Professional Experience"))
-    for job in d["experience"]:
-        body.append(
+        out.append(
             para(
                 [
-                    r(job["role"], b=True, color=INK, sz=21),
-                    tab_run(),
-                    r(f'{job["start"]} – {job["end"]}', color=MUTED, sz=17),
+                    r("Additional coursework:  ", b=True, color=TEAL, sz=18),
+                    r(d["coursework"], color=SOFT, sz=19),
                 ],
-                before=110, after=0, tabs=True, keep_next=True,
+                after=40,
             )
         )
-        body.append(
-            para(
-                [r(f'{job["org"]}  ·  {job["place"]}', i=True, color=SOFT, sz=19)],
-                after=50, keep_next=True,
-            )
-        )
-        for bullet in job["bullets"]:
-            body.append(
-                para([r(strip_tags(bullet), color=BODY, sz=19)], after=30, numbered=True)
-            )
+        return out
 
-    # --- projects
-    body.append(heading("Selected Projects"))
-    for p in d["projects"]:
-        label = p["demo_label"] or p["repo"].replace("https://", "")
-        body.append(
-            para(
-                [
-                    r(p["name"], b=True, color=INK, sz=20),
-                    r(f'  —  {p["language"]}  ·  {label}', color=MUTED, sz=17),
-                ],
-                before=90, after=10, keep_next=True,
+    def publications_block():
+        out = []
+        for pub in d["publications"]:
+            out.append(
+                para([r(strip_tags(pub), color=BODY, sz=18)],
+                     after=50, indent=(340, 340))
             )
+        out.append(
+            para([r(d["publications_note"], i=True, color=MUTED, sz=18)], before=60)
         )
-        body.append(
-            para([r(strip_tags(p["blurb_plain"]), color=BODY, sz=19)], after=30)
-        )
+        return out
 
-    # --- education
-    body.append(heading("Education"))
-    for x in d["education"]:
-        body.append(
-            para(
-                [
-                    r(x["degree"], b=True, color=INK, sz=20),
-                    tab_run(),
-                    r(x["year"], color=MUTED, sz=17),
-                ],
-                before=90, after=0, tabs=True, keep_next=True,
-            )
-        )
-        runs = [r(x["school"], color=SOFT, sz=19)]
-        body.append(para(runs, after=0 if x.get("note") else 30))
-        if x.get("note"):
-            body.append(para([r(x["note"], i=True, color=MUTED, sz=18)], after=30))
-    body.append(
-        para(
-            [
-                r("Graduate methods training:  ", b=True, color=TEAL, sz=18),
-                r(d["methods_training"], color=SOFT, sz=19),
-            ],
-            before=90, after=30,
-        )
-    )
-    body.append(
-        para(
-            [
-                r("Additional coursework:  ", b=True, color=TEAL, sz=18),
-                r(d["coursework"], color=SOFT, sz=19),
-            ],
-            after=40,
-        )
-    )
-
-    # --- publications
-    body.append(heading("Selected Publications"))
-    for p in d["publications"]:
-        body.append(
-            para([r(strip_tags(p), color=BODY, sz=18)], after=50, indent=(340, 340))
-        )
-    body.append(para([r(d["publications_note"], i=True, color=MUTED, sz=18)], before=60))
+    blocks = {
+        "skills": skills_block,
+        "experience": experience_block,
+        "projects": projects_block,
+        "education": education_block,
+        "publications": publications_block,
+    }
+    for key in d["section_order"]:
+        body.append(heading(d["section_titles"][key]))
+        body.extend(blocks[key]())
 
     sect = (
         "<w:sectPr>"
@@ -971,31 +1050,60 @@ def render_pdf(html_path: Path, pdf_path: Path) -> bool:
 # ---------------------------------------------------------------------------
 
 
-def main() -> int:
-    d = load()
+def build_one(variant: str | None) -> int:
+    d = load(variant)
     BUILD.mkdir(exist_ok=True)
 
-    site = ROOT / "resume.html"
-    site.write_text(build_site_html(d), encoding="utf-8")
-    print(f"  ✓ {site.relative_to(ROOT)}")
+    suffix = f"_{variant.capitalize()}" if variant else ""
+    stem = f"resume-print{'-' + variant if variant else ''}"
 
-    print_html = BUILD / "resume-print.html"
+    # The site has one resume page, always the default variant. Variants exist
+    # to be attached to an application, not published.
+    if variant is None:
+        site = ROOT / "resume.html"
+        site.write_text(build_site_html(d), encoding="utf-8")
+        print(f"  ✓ {site.relative_to(ROOT)}")
+
+    print_html = BUILD / f"{stem}.html"
     print_html.write_text(build_print_html(d), encoding="utf-8")
     print(f"  ✓ {print_html.relative_to(ROOT)}")
 
-    docx = ROOT / "assets" / f"{BASENAME}.docx"
+    docx = ROOT / "assets" / f"{BASENAME}{suffix}.docx"
     build_docx(d, docx)
     print(f"  ✓ {docx.relative_to(ROOT)}  ({docx.stat().st_size // 1024} KB)")
 
-    pdf = ROOT / "assets" / f"{BASENAME}.pdf"
+    pdf = ROOT / "assets" / f"{BASENAME}{suffix}.pdf"
     if render_pdf(print_html, pdf):
         print(f"  ✓ {pdf.relative_to(ROOT)}  ({pdf.stat().st_size // 1024} KB)")
     else:
-        print("  ! PDF not generated — install Chrome/Chromium or LibreOffice,",
-              "or open build/resume-print.html and print to PDF.", file=sys.stderr)
+        print(f"  ! PDF not generated — install Chrome/Chromium, or open "
+              f"{print_html.relative_to(ROOT)} and print to PDF.", file=sys.stderr)
         return 1
 
     return 0
+
+
+def main() -> int:
+    variants = [None]
+    args = sys.argv[1:]
+    if args and args[0] in ("--variant", "-v"):
+        if len(args) < 2:
+            print("usage: build_resume.py [--variant NAME | --all]", file=sys.stderr)
+            return 2
+        variants = [args[1]]
+    elif args and args[0] == "--all":
+        found = sorted((ROOT / "data" / "variants").glob("*.json"))
+        variants = [None] + [p.stem for p in found]
+    elif args:
+        print("usage: build_resume.py [--variant NAME | --all]", file=sys.stderr)
+        return 2
+
+    status = 0
+    for v in variants:
+        if v is not None:
+            print(f"  --- variant: {v} ---")
+        status |= build_one(v)
+    return status
 
 
 if __name__ == "__main__":
