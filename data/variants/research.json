@@ -17,6 +17,7 @@
       "items": [
         { "name": "Experimental design" },
         { "name": "Survey & instrument development" },
+        { "name": "Sampling & power analysis" },
         { "name": "IRB preparation & submission" },
         { "name": "Qualitative interviews & analysis" },
         { "name": "Mixed-methods integration" }
@@ -38,6 +39,7 @@
       "items": [
         { "name": "Python", "level": "proficient" },
         { "name": "R" },
+        { "name": "SPSS" },
         { "name": "SQL / Microsoft SQL Server" },
         { "name": "Qualtrics" },
         { "name": "MATLAB" },

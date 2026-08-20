@@ -65,9 +65,22 @@ Variants produce `assets/Nicholas_Gray_Resume_<Name>.pdf` and `.docx` only. The
 website always shows the default version — variants exist to be attached to an
 application, not published.
 
-`data/variants/research.json` is the worked example: research-facing skill
-groups, IRB and Qualtrics surfaced in the postdoctoral role, and modeling work
-described in terms of analysis rather than production systems.
+Two variants exist so far:
+
+| Variant | For | Leads with | Drops |
+| --- | --- | --- | --- |
+| *(default)* | Data science roles | XGBoost, pipelines, AI & automation | survey methods, IRB, SPSS |
+| `research` | Academic and nonprofit research, evaluation | mixed methods, IRB, Qualtrics, publications above projects | machine learning framing |
+| `survey` | Survey research science, consumer insights | survey design *and* modeling, on insurance domain experience | nothing much — it is the widest of the three |
+
+`survey` exists because some roles want both halves at once: survey
+methodology and statistical modeling, in Python and SQL, against a commercial
+domain. Neither of the other two covers that on its own — the default buries
+the survey work, and `research` drops the machine learning.
+
+Keep skills honest per variant rather than listing everything everywhere. SPSS
+belongs on the research-facing versions and would read as legacy on the data
+science one; XGBoost is the reverse.
 
 The other three pages *are* hand-written, so edit them directly. They each carry
 their own copy of the masthead and footer; if you change the navigation, change
