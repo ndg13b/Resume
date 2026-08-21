@@ -1,0 +1,82 @@
+{
+  "_comment": "Overlay on data/resume.json for survey research science and consumer insights roles — the market-research end of data science, where survey methodology and statistical modeling are wanted together. Build with `python3 tools/build_resume.py --variant survey`.",
+
+  "title": "Research Scientist",
+  "tagline": "Survey research, statistical modeling, and insurance analytics.",
+
+  "summary": "Research scientist with a Ph.D. in Cognitive Psychology, nearly four years of insurance analytics, and nine years designing and analyzing survey and experimental studies. Works daily in Python and SQL over large, complex datasets — cleaning, modeling, validating, and automating the reporting around them — on a foundation of measurement design and statistical inference from ANOVA through structural equation modeling.",
+
+  "skills": [
+    {
+      "group": "Programming & Data",
+      "items": [
+        { "name": "Python", "level": "proficient" },
+        { "name": "SQL / Microsoft SQL Server" },
+        { "name": "R" },
+        { "name": "SPSS" },
+        { "name": "MATLAB" },
+        { "name": "Microsoft Excel", "level": "proficient" },
+        { "name": "ETL & data cleaning" }
+      ]
+    },
+    {
+      "group": "Statistical Methods",
+      "items": [
+        { "name": "Descriptive & inferential statistics" },
+        { "name": "ANOVA" },
+        { "name": "Regression (linear & logistic)" },
+        { "name": "Multivariate analysis" },
+        { "name": "Structural equation modeling" },
+        { "name": "Meta-analysis" }
+      ]
+    },
+    {
+      "group": "Modeling & Machine Learning",
+      "items": [
+        { "name": "XGBoost & gradient boosting (applied)" },
+        { "name": "Model validation & evaluation" },
+        { "name": "Automated analysis pipelines" },
+        { "name": "LLM-assisted reporting" }
+      ]
+    },
+    {
+      "group": "Survey & Study Design",
+      "items": [
+        { "name": "Survey & instrument development" },
+        { "name": "Qualtrics" },
+        { "name": "Sampling & power analysis" },
+        { "name": "Experimental design" },
+        { "name": "Qualitative interviews & analysis" },
+        { "name": "Mixed-methods integration" }
+      ]
+    },
+    {
+      "group": "Communication",
+      "items": [
+        { "name": "Stakeholder reporting & dashboards" },
+        { "name": "Data visualization" },
+        { "name": "Technical writing" },
+        { "name": "Manuscript writing & presentation" }
+      ]
+    }
+  ],
+
+  "experience_overrides": {
+    "Safety National Casualty Corporation": {
+      "bullets": [
+        "Extract and join data from large, complex sources in Microsoft SQL Server, then clean, transform, and model it in Python.",
+        "Run, adjust, and validate established machine-learning models (XGBoost), interpreting predictions for underwriting and claims questions.",
+        "Built an automated reporting pipeline that calls an LLM to generate written insights alongside the quantitative results.",
+        "Design custom analyses out of exploratory investigation and build the reports and dashboards that deliver them to internal teams and external stakeholders."
+      ]
+    },
+    "Institute for Successful Longevity, Florida State University": {
+      "bullets": [
+        "Led statistical analysis for large-scale behavioral clinical trials, working across longitudinal survey and assessment datasets and multiple analysis platforms.",
+        "Designed and fielded survey instruments in Qualtrics, and established statistical performance norms for the measures collected.",
+        "Built regression models identifying the variables that drive participant outcomes, and integrated qualitative interview data with quantitative measures.",
+        "Published results in peer-reviewed journals and presented findings at national conferences."
+      ]
+    }
+  }
+}

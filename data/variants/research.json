@@ -1,0 +1,88 @@
+{
+  "_comment": "Overlay on data/resume.json for research and evaluation roles. Only differences live here; dates, employers, education, publications and contact details all come from the base file. Build with `python3 tools/build_resume.py --variant research`.",
+
+  "title": "Quantitative Researcher",
+  "tagline": "Behavioral health research, measurement design, and mixed-methods analysis.",
+
+  "summary": "Researcher with a Ph.D. in Cognitive Psychology and nine years designing, running, and analyzing behavioral health studies, including large-scale clinical trials on cognitive aging. Works across mixed methods — instrument development, survey fielding, qualitative analysis, and quantitative analysis from descriptives through structural equation modeling — and brings four years of industry data engineering in SQL and Python to data preparation and reporting. Published in peer-reviewed health and aging journals.",
+
+  "section_order": ["skills", "experience", "education", "publications", "projects"],
+  "section_titles": {
+    "skills": "Research & Analytic Skills"
+  },
+
+  "skills": [
+    {
+      "group": "Research Methods",
+      "items": [
+        { "name": "Experimental design" },
+        { "name": "Survey & instrument development" },
+        { "name": "Sampling & power analysis" },
+        { "name": "IRB preparation & submission" },
+        { "name": "Qualitative interviews & analysis" },
+        { "name": "Mixed-methods integration" }
+      ]
+    },
+    {
+      "group": "Statistical Analysis",
+      "items": [
+        { "name": "Descriptive & inferential statistics" },
+        { "name": "ANOVA" },
+        { "name": "Regression (linear & logistic)" },
+        { "name": "Multivariate analysis" },
+        { "name": "Structural equation modeling" },
+        { "name": "Meta-analysis" }
+      ]
+    },
+    {
+      "group": "Tools",
+      "items": [
+        { "name": "Python", "level": "proficient" },
+        { "name": "R" },
+        { "name": "SPSS" },
+        { "name": "SQL / Microsoft SQL Server" },
+        { "name": "Qualtrics" },
+        { "name": "MATLAB" },
+        { "name": "Microsoft Excel", "level": "proficient" }
+      ]
+    },
+    {
+      "group": "Data & Reporting",
+      "items": [
+        { "name": "Data cleaning & merging" },
+        { "name": "ETL" },
+        { "name": "Automated reporting pipelines" },
+        { "name": "Data visualization" }
+      ]
+    },
+    {
+      "group": "Communication",
+      "items": [
+        { "name": "Manuscript writing" },
+        { "name": "Stakeholder reporting" },
+        { "name": "Technical writing" },
+        { "name": "Presentation & teaching" }
+      ]
+    }
+  ],
+
+  "experience_overrides": {
+    "Safety National Casualty Corporation": {
+      "bullets": [
+        "Design custom analyses out of exploratory investigation, tailoring method and reporting to the question each stakeholder is actually asking.",
+        "Extract and join data from large, complex sources in Microsoft SQL Server, then clean, merge, and reshape it in Python for analysis.",
+        "Built an automated reporting pipeline that calls an LLM to generate written insights alongside the quantitative results.",
+        "Build analytics reports and dashboards for internal teams and external stakeholders, and validate output from established predictive models."
+      ]
+    },
+    "Institute for Successful Longevity, Florida State University": {
+      "bullets": [
+        "Led statistical analysis for large-scale behavioral clinical trials on healthy cognitive aging, working across longitudinal datasets and multiple analysis platforms.",
+        "Designed and programmed studies end to end, preparing and submitting the IRB applications and building and fielding survey instruments in Qualtrics.",
+        "Established statistical performance norms and built regression models identifying the variables that drive cognitive outcomes.",
+        "Integrated qualitative data from surveys and interviews with quantitative measures to produce findings neither stream would support alone.",
+        "Published results in peer-reviewed journals and presented findings at national conferences."
+      ]
+    }
+  }
+}
