@@ -145,6 +145,16 @@
     }
   ],
 
+  "certifications": [
+    {
+      "name": "Machine Learning Specialization",
+      "issuer": "DeepLearning.AI & Stanford Online (Coursera)",
+      "year": "2026",
+      "detail": "Supervised learning (regression, classification, neural networks, decision trees), unsupervised learning, recommender systems, reinforcement learning",
+      "verify": "https://coursera.org/verify/specialization/SW5H67729NIE"
+    }
+  ],
+
   "methods_training": "ANOVA, regression, meta-analysis, structural equation modeling",
   "coursework": "Machine Learning with Python; Microsoft SQL Server (independently completed)",
 
