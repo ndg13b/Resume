@@ -283,6 +283,24 @@ def project_cards(d: dict) -> str:
 # ---------------------------------------------------------------------------
 
 
+def cert_lines(d: dict, *, link: bool) -> list[str]:
+    """
+    One line per certification: name, issuer, year, then the topics covered.
+
+    Certifications sit in the Education section rather than the skills grid on
+    purpose. Coursework is not the same claim as daily use, and mixing the two
+    would misrepresent the depth of everything around it.
+    """
+    out = []
+    for cert in d.get("certifications") or []:
+        name = e(cert["name"])
+        if link and cert.get("verify"):
+            name = f'<a href="{e(cert["verify"])}" rel="noopener">{name}</a>'
+        head_txt = f'{name} &mdash; {e(cert["issuer"])}, {e(cert["year"])}'
+        out.append(f'{head_txt}<br>{e(cert["detail"])}' if cert.get("detail") else head_txt)
+    return out
+
+
 def build_site_html(d: dict) -> str:
     c = d["contact"]
 
@@ -338,6 +356,7 @@ def build_site_html(d: dict) -> str:
     )
 
     pubs = "".join(f"\n        <li>{p}</li>" for p in d["publications"])
+    certs_web = "<br>".join(cert_lines(d, link=True))
 
     return f"""{head(f"{d['name']} — Resume", f"{d['title']} in {c['location']}. {strip_tags(d['tagline'])}")}
 
@@ -418,6 +437,10 @@ def build_site_html(d: dict) -> str:
       <ul class="edu-list">
 {edu}
       </ul>
+      <div class="coursework">
+        <strong>Certification</strong>
+        {certs_web}
+      </div>
       <div class="coursework">
         <strong>Graduate methods training</strong>
         {e(d["methods_training"])}
@@ -606,13 +629,19 @@ def build_print_html(d: dict) -> str:
 """
 
     pubs = "".join(f'      <div class="pub">{strip_tags(p)}</div>\n' for p in d["publications"])
+    certs_print = "".join(
+        f'    <div class="coursework"><b>Certification:</b> '
+        f'{strip_tags(line.replace("<br>", ". "))}</div>\n'
+        for line in cert_lines(d, link=False)
+    )
 
     blocks = {
         "skills": f'    <table class="skills-table">\n{skills}    </table>',
         "experience": jobs.rstrip("\n"),
         "projects": projects.rstrip("\n"),
         "education": (
-            f'{edu}    <div class="coursework"><b>Graduate methods training:</b> '
+            f'{edu}{certs_print}'
+            f'    <div class="coursework"><b>Graduate methods training:</b> '
             f'{e(d["methods_training"])}</div>\n'
             f'    <div class="coursework"><b>Additional coursework:</b> '
             f'{e(d["coursework"])}</div>'
@@ -822,6 +851,18 @@ def build_docx_document(d: dict) -> str:
                             after=0 if x.get("note") else 30))
             if x.get("note"):
                 out.append(para([r(x["note"], i=True, color=MUTED, sz=18)], after=30))
+        for cert in d.get("certifications") or []:
+            detail = f'. {cert["detail"]}' if cert.get("detail") else ""
+            out.append(
+                para(
+                    [
+                        r("Certification:  ", b=True, color=TEAL, sz=18),
+                        r(f'{cert["name"]} — {cert["issuer"]}, {cert["year"]}{detail}',
+                          color=SOFT, sz=19),
+                    ],
+                    before=90, after=30,
+                )
+            )
         out.append(
             para(
                 [
